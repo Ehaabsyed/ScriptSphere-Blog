@@ -1,1 +1,44 @@
 @import "tailwindcss";
+*{
+  padding: 0;
+  margin: 0;
+}
+.img{
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+
+.ml-31{
+  margin-left:120px; 
+}
+input[type="submit"],button{
+  cursor: pointer;
+}
+.box-shadow{
+  box-shadow: rgb(255, 255, 255) 0px 5px 15px;
+}
+.blog-shadow{
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.blogsbg{
+  background: #877DD1;
+background: linear-gradient(0deg,rgba(135, 125, 209, 1) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+.blogs{
+  margin: 10px 20px;
+}
+.blog{
+  padding: 12px;
+  margin-bottom: 15px;
+}
+.active{
+  border-radius: 50px;
+  background-color: #42307D;
+  color: white;
+  border: none;
+  padding: 5px 15px;
+}
