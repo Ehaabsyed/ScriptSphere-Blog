@@ -1,8 +1,41 @@
-import React from 'react'
-import { Link } from 'react-router'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaHeart } from 'react-icons/fa';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import Lenis from 'lenis'
 
 function Profile() {
+  // Initialize Lenis
+const lenis = new Lenis({
+  autoRaf: true,
+});
+
+// Listen for the scroll event and log the event data
+lenis.on('scroll', (e) => {
+  // console.log(e);
+});
+  const [User, setUser] = useState({})
+  const navigate=useNavigate()
+  useEffect(() => {
+    const authcheck=async ()=>{
+      await axios.get("http://localhost:5000/auth/me", { withCredentials: true })
+      .then(async (response)=>{
+        if(response.data.status){
+          console.log(response.data);
+          setUser(response.data.user)
+          
+        }else{
+          toast.error("You are not Logged In")
+          navigate("/")
+        }
+        
+      })
+      
+    }
+    authcheck()
+  
+  }, [])
   return (
     <div className='min-h-[90.3vh] w-full blogsbg flex gap-5 flex-col justify-center items-center'>
       <div className="profile border w-1/4 mt-8 h-90 border-black rounded-4xl p-8 overflow-hidden">
@@ -11,8 +44,8 @@ function Profile() {
           <Link>Upload your profile picture</Link>
         </div>
         <div className="info flex flex-col justify-center items-center w-full">
-          <h1 className='text-2xl font-bold'>Syed Mohammed Ehaab</h1>
-          <h2 className='text-xl font-medium'>Username</h2>
+          <h1 className='text-2xl font-bold'>{User.name}</h1>
+          <h2 className='text-xl font-serif'>{User.username}</h2>
         </div>
       </div>
 
@@ -20,7 +53,7 @@ function Profile() {
         <h1 className='text-2xl font-medium underline mb-10'>3 Posts</h1>
 
 
-        <Link to="/view/id">
+        <div onClick={()=>{navigate("/view/id")}}>
           <div className="blog w-full h-[220px] blog-shadow flex justify-center items-start gap-5 rounded-3xl">
             <img src="/bg-night.jpg" alt="" className='w-[35%] h-full rounded-3xl' />
             <div className="flex flex-col gap-1">
@@ -31,10 +64,10 @@ function Profile() {
               <div className="flex w-full justify-between items-center">
               <h3 className='text-xl text-red-700 font-medium'>10 Likes</h3>
               <div className="flex gap-2">
-                <Link to="/edit/id">
+                <Link to="/edit/id" onClick={(e)=>{e.stopPropagation()}}>
               <h3 className='text-xl text-red-700 font-normal'>Edit</h3>
               </Link>
-                <Link to="/delete/id">
+                <Link to="/delete/id" onClick={(e)=>{e.stopPropagation()}}>
               <h3 className='text-xl text-red-700 font-normal'>Delete</h3>
               </Link>
               </div>
@@ -42,7 +75,7 @@ function Profile() {
               </div>
             </div>
           </div>
-        </Link>
+        </div>
 
       </div>
 

@@ -12,6 +12,8 @@ import View from './components/View.jsx'
 import Profile from './components/Profile.jsx'
 import Profileid from './components/Profileid.jsx'
 import Editblog from './components/Editblog.jsx'
+import {Toaster} from 'react-hot-toast'
+
 const router=createBrowserRouter([
   //home page
   {
@@ -60,8 +62,8 @@ const router=createBrowserRouter([
   }
 ])
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-      <App />
+      <>
       <RouterProvider router={router} />
-  </StrictMode>,
+      <Toaster/>
+      </>
 )

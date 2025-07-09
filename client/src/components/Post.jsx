@@ -1,6 +1,28 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect } from 'react'
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router';
 
 function Post() {
+  const navigate=useNavigate()
+  useEffect(() => {
+    const authcheck=async ()=>{
+      await axios.get("http://localhost:5000/auth/me", { withCredentials: true })
+      .then(async (response)=>{
+        if(response.data.status){
+          console.log(response.data);
+          
+        }else{
+          toast.error("You are not Logged In")
+          navigate("/")
+        }
+        
+      })
+      
+    }
+    authcheck()
+  
+  }, [])
   return (
     <div className='min-h-[90.3vh] w-full blogsbg flex justify-center items-center'>
       <form action="" className='min-h-[70vh] border-2 border-black rounded-2xl p-8 w-1/2'>

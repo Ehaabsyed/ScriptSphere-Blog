@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router'
+import { Link, Navigate, useNavigate } from 'react-router'
 import axios, { Axios } from 'axios';
 import { useForm } from 'react-hook-form';
-
-function Login() {
-  const [Userdata, setUserdata] = useState({})
+import toast from 'react-hot-toast';
+function Signup() {
+  const navigate=useNavigate()
   //useform 
   const {
     register,
@@ -17,9 +17,14 @@ function Login() {
     //timer of 2s
     await new Promise((resolve) => setTimeout(resolve, 2000))
     // console.log(data);
-    axios.post("http://localhost:5000/auth/user",{data})
+    axios.post("http://localhost:5000/auth/signup",{data})
     .then(response=>{
-      console.log(response);
+      if(response.data.status){
+         navigate("/")
+      }else{
+        toast.error("User already Exists!")
+        console.log(response)
+      }
     })
     .catch(err=>{
       console.log(err);   
@@ -58,13 +63,13 @@ function Login() {
 
           </form>
         </div>
-        <div className="quote  border-white max-w-[40vw]">
-          <h1 className='text-[100px] mt leading-24 font-bold text-white'>New User!</h1>
-          <p className='text-xl mt text-white font-medium'>Lorem ipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elit. Voluptates illum officiis iure dio.</p>
+        <div className="quote flex flex-col gap-4  border-white max-w-[40vw]">
+          <h1 className='text-6xl mt leading-24 font-bold text-white'>New User!</h1>
+          <p className='text-2xl mt text-white font-medium'>Lorem ipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elit. Voluptates illum officiis iure dio.</p>
         </div>
       </div>
     </div>
   )
 }
 
-export default Login
+export default Signup

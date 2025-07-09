@@ -1,7 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+
 function Login() {
+  const navigate=useNavigate()
   //useform
    const {
     register,
@@ -9,10 +13,29 @@ function Login() {
     formState: { errors,isSubmitting },
     reset
   } = useForm();
-  //onsubmit
+  axios.defaults.withCredentials=true
+ //function onsubmit
   async function onSubmit(data) {
-    await new Promise((resolve) => setTimeout(resolve, 3000))
-    console.log(data);
+    //timer of 2s
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+    // console.log(data);
+    axios.post("http://localhost:5000/auth/login",{data})
+    .then(response=>{
+      // console.log(response);
+      
+      if(response.data.status){
+         navigate("/blogs")
+      }else if(!response.data.exist){
+        toast.error("User not found")
+      }else if(!response.data.status){
+        toast("password is incoorect")
+      }
+    })
+    .catch(err=>{
+      console.log(err);   
+    })
+    
+    
     reset()
   }
 
@@ -21,9 +44,9 @@ function Login() {
       <video src="/smokebg.mp4" muted loop playsInline autoPlay className='img h-screen object-cover w-full absolute top-0 left-0' alt="" />
       <div className="logo text-6xl text-white font-semibold absolute top-10 left-[50%] -translate-x-[50%] ">ScriptSphere</div>
       <div className="ml-32  bg--500 absolute left-0 top-40 h-[75vh] w-[90vw] flex gap-10">
-        <div className="quote  border-white max-w-[50vw]">
-          <h1 className='text-[100px] mt leading-24 font-bold text-white'>Welcome Back!</h1>
-          <p className='text-xl mt text-white font-medium'>Lorem ipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elit. Voluptates illum officiis iure dio.</p>
+        <div className="quote  border-white flex flex-col gap-4 max-w-[50vw]">
+          <h2 className='text-6xl font-bold text-white'>Welcome Back!</h2>
+          <p className='text-2xl mt text-white font-medium'>Lorem ipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elit. Voluptates illum officiis iure dio.</p>
           </div>
         <div className="form  flex justify-center items-center h-[60vh] bg--400 w-full">
           <form onSubmit={handleSubmit(onSubmit)} method='POST' className='flex box-shadow flex-col gap-3 text-white h-full w-[30vw] rounded-4xl border-2 border-white text-xl items-start p-8 justify-center'>

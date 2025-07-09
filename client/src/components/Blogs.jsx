@@ -1,7 +1,43 @@
-import React from 'react'
-import { Link } from 'react-router'
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from 'react-router-dom'
 import { FaHeart } from 'react-icons/fa';
+import axios from 'axios';
+import toast from "react-hot-toast";
+import Lenis from 'lenis'
+
 function Blogs() {
+  // Initialize Lenis
+const lenis = new Lenis({
+  autoRaf: true,
+});
+
+// Listen for the scroll event and log the event data
+lenis.on('scroll', (e) => {
+  // console.log(e);
+});
+  const [User, setUser] = useState({})
+  const navigate=useNavigate()
+  useEffect(() => {
+    const authcheck=async ()=>{
+      await axios.get("http://localhost:5000/auth/me", { withCredentials: true })
+      .then(async (response)=>{
+        if(response.data.status){
+          console.log(response.data);
+          
+          setUser(response.data.user)
+        }else{
+          toast.error("You are not Logged In")
+          navigate("/")
+        }
+        
+      })
+      
+    }
+    authcheck()
+  
+  }, [])
+  
+  
   return (
     <div className='min-h-[calc(100vh-70px)] blogsbg overflow-hidden'>
       <div className="input h-40 w-full  flex flex-col items-center justify-center gap-3">
@@ -14,16 +50,16 @@ function Blogs() {
         </div>
       </div>
       <div className="blogs w-full h-full flex flex-wrap gap-5 justify-start items-center">
-        <Link to="/view/id">
+        <div onClick={()=>{navigate("/view/id")}}>
         <div className="blog w-[350px] h-[400px] blog-shadow flex flex-col rounded-3xl">
           <img src="/bg-night.jpg" alt="" className='h-[50%] w-full rounded-3xl' />
           <p className='text-gray-600 text-[15px]'>category</p>
           <h2 className='text-xl font-medium'>title</h2>
           <p className='text-[18px] overflow-hidden tracking-tight leading-5'>this is a page wherer you can write a blog of your choice your freedom</p>
           <div className="userinfo flex h-fit gap-5 mt-3 bg-transparent items-center">
-           <Link to="/profile/id"> <img src="/default.jpg" className='h-10 rounded-full img' alt="" /></Link>
+           <Link to="/profile/id" onClick={(e)=>{e.stopPropagation()}}> <img src="/default.jpg" className='h-10 rounded-full img' alt="" /></Link>
             <div className="info">  
-            <Link to="/profile/id"><h5 className='text-[18px]'>ehaabsyed</h5></Link>
+            <Link to="/profile/id" onClick={(e)=>{e.stopPropagation()}}><h5 className='text-[18px]'>ehaabsyed</h5></Link>
               <p className='text-[14px] text-gray-600'>12 june 2025</p>
             </div>
             <div className="likes ml-31 ">
@@ -31,7 +67,101 @@ function Blogs() {
             </div>
           </div>
         </div> 
-        </Link>
+        </div>
+
+
+        {/* dummy */}
+        <div onClick={()=>{navigate("/view/id")}}>
+        <div className="blog w-[350px] h-[400px] blog-shadow flex flex-col rounded-3xl">
+          <img src="/bg-night.jpg" alt="" className='h-[50%] w-full rounded-3xl' />
+          <p className='text-gray-600 text-[15px]'>category</p>
+          <h2 className='text-xl font-medium'>title</h2>
+          <p className='text-[18px] overflow-hidden tracking-tight leading-5'>this is a page wherer you can write a blog of your choice your freedom</p>
+          <div className="userinfo flex h-fit gap-5 mt-3 bg-transparent items-center">
+           <Link to="/profile/id" onClick={(e)=>{e.stopPropagation()}}> <img src="/default.jpg" className='h-10 rounded-full img' alt="" /></Link>
+            <div className="info">  
+            <Link to="/profile/id" onClick={(e)=>{e.stopPropagation()}}><h5 className='text-[18px]'>ehaabsyed</h5></Link>
+              <p className='text-[14px] text-gray-600'>12 june 2025</p>
+            </div>
+            <div className="likes ml-31 ">
+              <FaHeart className='text-2xl text-red-600'/>
+            </div>
+          </div>
+        </div> 
+        </div>
+        <div onClick={()=>{navigate("/view/id")}}>
+        <div className="blog w-[350px] h-[400px] blog-shadow flex flex-col rounded-3xl">
+          <img src="/bg-night.jpg" alt="" className='h-[50%] w-full rounded-3xl' />
+          <p className='text-gray-600 text-[15px]'>category</p>
+          <h2 className='text-xl font-medium'>title</h2>
+          <p className='text-[18px] overflow-hidden tracking-tight leading-5'>this is a page wherer you can write a blog of your choice your freedom</p>
+          <div className="userinfo flex h-fit gap-5 mt-3 bg-transparent items-center">
+           <Link to="/profile/id" onClick={(e)=>{e.stopPropagation()}}> <img src="/default.jpg" className='h-10 rounded-full img' alt="" /></Link>
+            <div className="info">  
+            <Link to="/profile/id" onClick={(e)=>{e.stopPropagation()}}><h5 className='text-[18px]'>ehaabsyed</h5></Link>
+              <p className='text-[14px] text-gray-600'>12 june 2025</p>
+            </div>
+            <div className="likes ml-31 ">
+              <FaHeart className='text-2xl text-red-600'/>
+            </div>
+          </div>
+        </div> 
+        </div>
+        <div onClick={()=>{navigate("/view/id")}}>
+        <div className="blog w-[350px] h-[400px] blog-shadow flex flex-col rounded-3xl">
+          <img src="/bg-night.jpg" alt="" className='h-[50%] w-full rounded-3xl' />
+          <p className='text-gray-600 text-[15px]'>category</p>
+          <h2 className='text-xl font-medium'>title</h2>
+          <p className='text-[18px] overflow-hidden tracking-tight leading-5'>this is a page wherer you can write a blog of your choice your freedom</p>
+          <div className="userinfo flex h-fit gap-5 mt-3 bg-transparent items-center">
+           <Link to="/profile/id" onClick={(e)=>{e.stopPropagation()}}> <img src="/default.jpg" className='h-10 rounded-full img' alt="" /></Link>
+            <div className="info">  
+            <Link to="/profile/id" onClick={(e)=>{e.stopPropagation()}}><h5 className='text-[18px]'>ehaabsyed</h5></Link>
+              <p className='text-[14px] text-gray-600'>12 june 2025</p>
+            </div>
+            <div className="likes ml-31 ">
+              <FaHeart className='text-2xl text-red-600'/>
+            </div>
+          </div>
+        </div> 
+        </div>
+        <div onClick={()=>{navigate("/view/id")}}>
+        <div className="blog w-[350px] h-[400px] blog-shadow flex flex-col rounded-3xl">
+          <img src="/bg-night.jpg" alt="" className='h-[50%] w-full rounded-3xl' />
+          <p className='text-gray-600 text-[15px]'>category</p>
+          <h2 className='text-xl font-medium'>title</h2>
+          <p className='text-[18px] overflow-hidden tracking-tight leading-5'>this is a page wherer you can write a blog of your choice your freedom</p>
+          <div className="userinfo flex h-fit gap-5 mt-3 bg-transparent items-center">
+           <Link to="/profile/id" onClick={(e)=>{e.stopPropagation()}}> <img src="/default.jpg" className='h-10 rounded-full img' alt="" /></Link>
+            <div className="info">  
+            <Link to="/profile/id" onClick={(e)=>{e.stopPropagation()}}><h5 className='text-[18px]'>ehaabsyed</h5></Link>
+              <p className='text-[14px] text-gray-600'>12 june 2025</p>
+            </div>
+            <div className="likes ml-31 ">
+              <FaHeart className='text-2xl text-red-600'/>
+            </div>
+          </div>
+        </div> 
+        </div>
+        <div onClick={()=>{navigate("/view/id")}}>
+        <div className="blog w-[350px] h-[400px] blog-shadow flex flex-col rounded-3xl">
+          <img src="/bg-night.jpg" alt="" className='h-[50%] w-full rounded-3xl' />
+          <p className='text-gray-600 text-[15px]'>category</p>
+          <h2 className='text-xl font-medium'>title</h2>
+          <p className='text-[18px] overflow-hidden tracking-tight leading-5'>this is a page wherer you can write a blog of your choice your freedom</p>
+          <div className="userinfo flex h-fit gap-5 mt-3 bg-transparent items-center">
+           <Link to="/profile/id" onClick={(e)=>{e.stopPropagation()}}> <img src="/default.jpg" className='h-10 rounded-full img' alt="" /></Link>
+            <div className="info">  
+            <Link to="/profile/id" onClick={(e)=>{e.stopPropagation()}}><h5 className='text-[18px]'>ehaabsyed</h5></Link>
+              <p className='text-[14px] text-gray-600'>12 june 2025</p>
+            </div>
+            <div className="likes ml-31 ">
+              <FaHeart className='text-2xl text-red-600'/>
+            </div>
+          </div>
+        </div> 
+        </div>
+        
 
         
         
