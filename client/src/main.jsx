@@ -13,6 +13,7 @@ import Profile from './components/Profile.jsx'
 import Profileid from './components/Profileid.jsx'
 import Editblog from './components/Editblog.jsx'
 import {Toaster} from 'react-hot-toast'
+import Upload from './components/Upload.jsx'
 
 const router=createBrowserRouter([
   //home page
@@ -34,6 +35,11 @@ const router=createBrowserRouter([
   {
     path:"/profile",
     element:<><Navbar/><Profile/></>
+  },
+  // upload profile photo
+  {
+    path:"/upload/:email",
+    element:<><Upload/></>
   },
   //view others profile
   {

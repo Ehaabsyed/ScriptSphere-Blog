@@ -17,6 +17,14 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    image:{
+        type:String,
+        default:"/profile-Images/default.jpg"
+    },
+    blogs:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"blog"
+    }]
 })
 
 const UserModel=mongoose.model("User",UserSchema)

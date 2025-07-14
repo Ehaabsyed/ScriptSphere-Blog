@@ -1,19 +1,58 @@
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import toast from 'react-hot-toast'
-import { Link, useNavigate } from 'react-router'
+import { Link, useNavigate, useParams } from 'react-router'
 import Lenis from 'lenis'
-
+import { useState } from 'react'
+import { useGSAP } from "@gsap/react";
+import gsap from 'gsap'
 function View() {
-    // Initialize Lenis
-const lenis = new Lenis({
-  autoRaf: true,
-});
+  gsap.registerPlugin(useGSAP)
+const image = useRef()
+const main = useRef()
+const title = useRef()
+const dategsap = useRef()
+  const content = useRef()
+  useGSAP(() => {
+    const tl=gsap.timeline()
+    tl.from(main.current,{
+        opacity:0,
+        duration:0.1
+    })
+    tl.from(image.current,{
+        x:-900,
+        opacity:0,
+        duration:0.3
+    })
+    tl.from(title.current,{
+        x:900,
+        opacity:0,
+        duration:0.3
+    })
+    tl.from(content.current,{
+        x:-900,
+        opacity:0,
+        duration:0.3
+    })
+    tl.from(dategsap.current,{
+        x:900,
+        opacity:0,
+        duration:0.3
+    })
+    
 
-// Listen for the scroll event and log the event data
-lenis.on('scroll', (e) => {
-//   console.log(e);
-});
+  })
+    // Initialize Lenis
+    const lenis = new Lenis({
+        autoRaf: true,
+    });
+    const { id } = useParams()
+    const [blog, setblog] = useState({})
+
+    // Listen for the scroll event and log the event data
+    lenis.on('scroll', (e) => {
+        //   console.log(e);
+    });
     const navigate = useNavigate()
     useEffect(() => {
         const authcheck = async () => {
@@ -32,19 +71,33 @@ lenis.on('scroll', (e) => {
         }
         authcheck()
 
+        //get blog details
+
+        axios.post("http://localhost:5000/auth/viewblog", { id }, { withCredential: true })
+            .then(response => {
+                setblog(response.data.blog);
+            })
+            .catch(err => {
+                console.log(err);
+
+            })
+
     }, [])
     return (
         <div className='min-h-[110vh] w-full blogsbg relative top-0 left-0   pt-10 overflow-hidden'>
-            <Link to="/blogs"><div className="back absolute top-5 left-5 text-2xl text-[#42307D]">Back</div>
+            <Link to="/blogs"><div className="back absolute top-2 left-2 md:top-3 md:left-3 text-2xl text-[#42307D]">Back</div>
             </Link>
-            <div className="viewblog w-[60%] mb-10 min-h-[90vh] border-2 rounded-4xl border-black place-self-center flex flex-col gap-2 overflow-hidden p-10">
-                <img src="/bg-night.jpg" className='w-full imgv rounded-4xl' alt="" />
-                <h1 className='text-6xl'>Title</h1>
-                <p className='text-xl mt-3'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rerum atque quisquam et, reiciendis omnis dolor, eaque minima illum quae veniam sunt! Eveniet culpa vitae sint aperiam excepturi qui nihil odio!
-                    Expedita quam minima aut aperiam nemo, modi veniam sapiente voluptates soluta impedit dicta accusantium ab ratione ipsum? Molestiae minus provident quaerat consequuntur ipsum cum nemo quam aperiam. Doloribus, id recusandae!
-                    Praesentium facilis architecto inventore dolore enim ducimus quisquam exercitationem fugit aliquid, alias maxime recusandae, atque commodi facere rem vitae ipsa similique doloremque accusamus eius tempora quas quo vel nemo. Laborum?
-                    Sint labore laboriosam consequuntur magni adipisci. A animi maxime quasi consequatur architecto, soluta illo fugiat quisquam atque inventore non nam ad iusto culpa necessitatibus autem aliquam aperiam voluptate consequuntur? Quo.
-                    Libero, necessitatibus obcaecati. Enim omnis quae quia minus? Labore blanditiis beatae maiores odio quos. Porro saepe iste harum quam at dolores dolor magnam, aliquam illum quas. Molestias minima asperiores alias</p>
+            <div ref={main} className="viewblog w-[95%]  md:w-[60%] mb-10 min-h-[90vh] mt-10 border-2 rounded-4xl border-black place-self-center flex flex-col gap-2 overflow-hidden p-3 md:p-10">
+                <img ref={image} src={blog.image} className='w-full imgv rounded-4xl' alt="No Image found" />
+                <h1 ref={title} className='text-6xl'>{blog.title}</h1>
+                <p ref={content} className='text-xl mt-3'>{blog.content}</p>
+                <p ref={dategsap}>
+                    {new Date(blog.date).toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric',
+                    })}
+                </p>
 
             </div>
 

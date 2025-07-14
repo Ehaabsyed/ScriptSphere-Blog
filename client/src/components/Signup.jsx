@@ -1,9 +1,33 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router'
 import axios, { Axios } from 'axios';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useGSAP } from "@gsap/react";
+import gsap from 'gsap'
 function Signup() {
+  gsap.registerPlugin(useGSAP)
+  //gsap animations
+  useGSAP(()=>{
+    //scriptsphere
+    gsap.from(heading.current,{
+      y:-100,
+      duration:1,
+      opacity:0
+    })
+    gsap.from(text.current,{
+      x:-300,
+      duration:0.6,
+      opacity:0,
+      delay:1
+    })
+    gsap.from(form.current,{
+      x:300,
+      duration:0.6,
+      delay:1,
+      opacity:0,
+    })
+  })
   const navigate=useNavigate()
   //useform 
   const {
@@ -33,15 +57,17 @@ function Signup() {
     
     reset()
   }
-
+const heading = useRef()
+const text = useRef()
+const form = useRef()
   return (
     <div className='max-h-screen  w-full relative'>
       <video src="/smokebg.mp4" muted loop playsInline autoPlay className='img h-screen object-cover w-full absolute top-0 left-0' alt="" />
-      <div className="logo text-6xl text-white font-semibold absolute top-10 left-[50%] -translate-x-[50%] ">ScriptSphere</div>
-      <div className="setup absolute left-0 top-40 h-[75vh] w-[90vw] flex gap-10">
+      <div className="logo text-3xl md:text-6xl text-white font-semibold absolute top-10 left-[50%] -translate-x-[50%] " ref={heading}>ScriptSphere</div>
+      <div className="setup absolute justify-center items-center left-0 top-40 h-[55vh] w-[90vw] flex gap-10">
 
-        <div className="form flex justify-center items-center h-[75vh] w-full">
-          <form onSubmit={handleSubmit(onSubmit)} method='POST' className='flex flex-col box-shadow gap-[12px] text-white h-full w-[30vw] rounded-4xl border-2 border-white text-xl items-start  py-10 px-8 justify-center'>
+        <div className="form ml-12 sm:ml-4 md:ml-0 flex justify-center items-center h-[55vh] md:w-fit w-[80vw]">
+          <form ref={text} onSubmit={handleSubmit(onSubmit)} method='POST' className='flex flex-col box-shadow gap-[10px] text-white h-fit w-full rounded-4xl border-2 border-white text-xl items-start md:mt-20  py-3 px-8 justify-center'>
             <label htmlFor="name" className='text-xl'>Name</label>
             <input type="text" placeholder='Name' className='py-1 px-3 w-full border-white border rounded-full'
               {...register("name", { required: true, minLength: { value: 3, message: "min 3 letters required" } })} />
@@ -63,7 +89,7 @@ function Signup() {
 
           </form>
         </div>
-        <div className="quote flex flex-col gap-4  border-white max-w-[40vw]">
+        <div ref={form} className="quote md:flex flex-col gap-4  border-white max-w-[40vw] hidden ">
           <h1 className='text-6xl mt leading-24 font-bold text-white'>New User!</h1>
           <p className='text-2xl mt text-white font-medium'>Lorem ipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elitipsum dolor sit amet consectetur adipisicing elit. Voluptates illum officiis iure dio.</p>
         </div>
