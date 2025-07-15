@@ -43,7 +43,7 @@ function Navbar() {
   })
   const navigate = useNavigate()
   const handleLogout = async () => {
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}auth/logout`)
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}auth/logout`,{withCredentials:true})
       .then(res => {
         toast.success("logged Out Succesfully")
         navigate("/")
