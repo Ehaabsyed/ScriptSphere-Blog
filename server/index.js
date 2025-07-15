@@ -20,26 +20,18 @@ ConnectDB();
 
 const app = express();
 
-
-// ✅ Set allowed origins
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://script-sphere-swart.vercel.app'
-];
-
-// ✅ Use CORS middleware
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      return callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: [
+    'http://localhost:5173',
+    'https://script-sphere-swart.vercel.app',
+    'https://script-sphere-bice.vercel.app',
+  ],
   credentials: true,
 }));
+
+// handle preflight
+app.options('*', cors());
+
 
 // ✅ Middleware to parse cookies and JSON
 app.use(cookieParser());
