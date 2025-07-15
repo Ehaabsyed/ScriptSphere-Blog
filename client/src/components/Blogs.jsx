@@ -8,7 +8,7 @@ import { FaLinkedin } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-
+import { ScrollTrigger } from "gsap/all";
 
 
 function Blogs() {
@@ -19,6 +19,7 @@ function Blogs() {
   const secondtext = useRef()
   const searchref = useRef()
   gsap.registerPlugin(useGSAP)
+  gsap.registerPlugin(ScrollTrigger)
   //gsap animation
   useGSAP(() => {
     //scriptsphere
@@ -49,15 +50,11 @@ function Blogs() {
       delay: 0.5,
       opacity: 0,
     })
-    gsap.from(blogs.current, {
-      opacity:0,
-      duration:1,
-      delay:0.5,
-      y:500
-    })
+    
 
 
   })
+  
 
   // Initialize Lenis
   const lenis = new Lenis({
@@ -160,10 +157,31 @@ function Blogs() {
   }
   const filterblogs = allBlogs.filter((blog) => blog.title.toLowerCase().includes(search.toLowerCase()))
 
-  
+
 
 
   const reversedBlogs = [...filterblogs].reverse();
+useEffect(() => {
+  const cards = gsap.utils.toArray(".animate-card");
+
+  cards.forEach((card) => {
+    gsap.from(card, {
+      scrollTrigger: {
+        trigger: card,
+        start: "top 85%",
+        // markers: true, // optional: show for debug
+      },
+      opacity: 0,
+      y: 50,
+      duration: 0.6,
+      ease: "power3.out",
+    });
+  });
+
+  return () => {
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+  };
+}, [filterblogs]);
 
   return (
     <div className='min-h-[calc(100vh-70px)] blogsbg overflow-hidden'>
@@ -183,7 +201,7 @@ function Blogs() {
           {filterblogs.reverse().map((blog, index) => {
             return (
               <div onClick={(e) => handleView(e, blog._id)} key={blog._id} >
-                <div className="blog ml-8 md:ml-0 w-[320px] h-[370px] blog-shadow flex flex-col justify-between rounded-3xl">
+                <div className="blog animate-card ml-8 md:ml-0 w-[320px] h-[370px] blog-shadow flex flex-col justify-between rounded-3xl">
                   <img src={blog.image} alt="No Image found" className='blogimageheight w-full rounded-3xl' />
                   <p className='text-gray-600 text-[15px] line-clamp-2'>{blog.category}</p>
                   <h2 className='text-xl font-medium'>{blog.title}</h2>
@@ -220,7 +238,7 @@ function Blogs() {
 
             {trendingblogs.map((blog, index) => {
               return (
-                <div  onClick={() => navigate("/view/" + blog._id)} key={blog._id} className="boc h-22 blog-shadow rounded-xl p-1 w-full flex">
+                <div onClick={() => navigate("/view/" + blog._id)} key={blog._id} className="boc h-22 blog-shadow rounded-xl p-1 w-full flex">
                   <img src={blog.image} className="w-1/2 img rounded-xl h-full" alt="" />
                   <div className="info flex  flex-col h-full justify-between items-start p-2">
                     <h1 className="leading-4 tracking-tighter font-medium text-[17px]">{blog.title}</h1>

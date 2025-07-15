@@ -6,8 +6,12 @@ import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { useGSAP } from "@gsap/react";
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/all';
+
 function profileid() {
   gsap.registerPlugin(useGSAP)
+  gsap.registerPlugin(ScrollTrigger)
+  
   const profile = useRef()
   const gsapblogs = useRef()
   useGSAP(() => {
@@ -55,6 +59,28 @@ function profileid() {
       })
   }, [])
 
+useEffect(() => {
+  const cards = gsap.utils.toArray(".animate-card");
+
+  cards.forEach((card) => {
+    gsap.from(card, {
+      scrollTrigger: {
+        trigger: card,
+        start: "top 100%",
+        toggleActions: "play none none none",
+        // markers: true, // optional: show for debug
+      },
+      opacity: 0,
+      y: 50,
+      duration: 0.6,
+      ease: "power3.out",
+    });
+  });
+
+  return () => {
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+  };
+}, [blogs]);
 
   return (
     <div className='min-h-[90.3vh] w-full blogsbg flex gap-5 flex-col justify-center items-center'>
@@ -75,7 +101,7 @@ function profileid() {
         {blogs.reverse().map(blog => {
           return (
             <div onClick={() => { navigate("/view/" + blog._id) }} key={blog._id}>
-              <div className="blog w-[70vw] ml-20 md:ml-0 mr-20 h-[330px] md:h-[220px] overflow-hidden blog-shadow flex-col md:flex-row flex justify-center items-start md:justify-start md:items-start gap-5 rounded-3xl">
+              <div className="blog animate-card w-[70vw] ml-20 md:ml-0 mr-20 h-[330px] md:h-[220px] overflow-hidden blog-shadow flex-col md:flex-row flex justify-center items-start md:justify-start md:items-start gap-5 rounded-3xl">
                 <img src={blog.image} alt="" className='md:w-1/3 w-full h-2/3 md:h-full rounded-3xl' />
                 <div className="flex flex-col md:gap-1 h-full md:mt-0 -mt-4">
                   <p className='text-gray-800 md:text-[12px] md:mt-3'>{blog.category}</p>
