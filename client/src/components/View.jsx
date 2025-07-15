@@ -56,7 +56,7 @@ const dategsap = useRef()
     const navigate = useNavigate()
     useEffect(() => {
         const authcheck = async () => {
-            await axios.get("http://localhost:5000/auth/me", { withCredentials: true })
+            await axios.get(`${import.meta.env.VITE_BACKEND_URL}auth/me`, { withCredentials: true })
                 .then(async (response) => {
                     if (response.data.status) {
                         console.log(response.data);
@@ -73,7 +73,7 @@ const dategsap = useRef()
 
         //get blog details
 
-        axios.post("http://localhost:5000/auth/viewblog", { id }, { withCredential: true })
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}auth/viewblog`, { id }, { withCredential: true })
             .then(response => {
                 setblog(response.data.blog);
             })

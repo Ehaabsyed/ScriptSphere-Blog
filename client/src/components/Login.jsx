@@ -44,7 +44,7 @@ function Login() {
     //timer of 2s
     await new Promise((resolve) => setTimeout(resolve, 2000))
     // console.log(data);
-    axios.post("http://localhost:5000/auth/login",{data})
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}auth/login`,{data})
     .then(response=>{
       // console.log(response);
       

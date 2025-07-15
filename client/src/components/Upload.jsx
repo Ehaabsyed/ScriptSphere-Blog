@@ -14,7 +14,7 @@ function Upload() {
     useEffect(() => {
         const authcheck = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/auth/me", { withCredentials: true });
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}auth/me`, { withCredentials: true });
 
                 if (response.data.status) {
                     console.log(response.data)
@@ -49,7 +49,7 @@ function Upload() {
         formData.append('email', email);
 
         try {
-            const res = await axios.post('http://localhost:5000/auth/upload-profile', formData, {
+            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}auth/upload-profile`, formData, {
                 withCredentials: true,
                 headers: {
                     'Content-Type': 'multipart/form-data',

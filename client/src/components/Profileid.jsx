@@ -34,7 +34,7 @@ function profileid() {
   const navigate = useNavigate()
   useEffect(() => {
     const authcheck = async () => {
-      await axios.get("http://localhost:5000/auth/me", { withCredentials: true })
+      await axios.get(`${import.meta.env.VITE_BACKEND_URL}auth/me`, { withCredentials: true })
         .then(async (response) => {
           if (response.data.status) {
             console.log(response.data);
@@ -49,7 +49,7 @@ function profileid() {
     }
     authcheck()
     //get user details and blogs
-    axios.post("http://localhost:5000/auth/getuserdetail", { username }, { withCredential: true })
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}auth/getuserdetail`, { username }, { withCredential: true })
       .then(response => {
         setuser(response.data.user)
         setblogs(response.data.userBlogs);

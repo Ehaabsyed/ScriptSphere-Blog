@@ -43,7 +43,7 @@ function Navbar() {
   })
   const navigate = useNavigate()
   const handleLogout = async () => {
-    axios.get("http://localhost:5000/auth/logout")
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}auth/logout`)
       .then(res => {
         toast.success("logged Out Succesfully")
         navigate("/")
@@ -57,7 +57,7 @@ function Navbar() {
     useEffect(() => {
       const authcheck = async () => {
         try {
-          const response = await axios.get("http://localhost:5000/auth/me", { withCredentials: true });
+          const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}auth/me`, { withCredentials: true });
 
           if (response.data.status) {
             console.log(response.data)

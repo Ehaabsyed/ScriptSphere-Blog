@@ -41,7 +41,7 @@ function Signup() {
     //timer of 2s
     await new Promise((resolve) => setTimeout(resolve, 2000))
     // console.log(data);
-    axios.post("http://localhost:5000/auth/signup",{data})
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}auth/signup`,{data})
     .then(response=>{
       if(response.data.status){
          navigate("/")

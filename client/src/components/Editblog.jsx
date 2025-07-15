@@ -6,7 +6,7 @@ function Editblog() {
   const navigate=useNavigate()
   useEffect(() => {
     const authcheck=async ()=>{
-      await axios.get("http://localhost:5000/auth/me", { withCredentials: true })
+      await axios.get(`${import.meta.env.VITE_BACKEND_URL}auth/me`, { withCredentials: true })
       .then(async (response)=>{
         if(response.data.status){
           console.log(response.data);
