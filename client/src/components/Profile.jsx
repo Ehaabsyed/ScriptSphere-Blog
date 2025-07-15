@@ -46,7 +46,7 @@ function Profile() {
   useEffect(() => {
     const authcheck = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}auth/me`, { withCredentials: true });
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/me`, { withCredentials: true });
 
         if (response.data.status) {
           console.log(response.data)
@@ -68,7 +68,7 @@ function Profile() {
   // Fetch blogs wit username
   useEffect(() => {
     if (Username) {
-      axios.post(`${import.meta.env.VITE_BACKEND_URL}auth/getuserblogs`, { username: Username }, { withCredentials: true })
+      axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/getuserblogs`, { username: Username }, { withCredentials: true })
         .then(response => {
           setblogs(response.data.blogs);
         })
@@ -84,7 +84,7 @@ function Profile() {
   const handleDelete = async (e, id) => {
     e.stopPropagation()
     if (window.confirm("Are you sure you want to delete the blog?")) {
-      axios.post(`${import.meta.env.VITE_BACKEND_URL}auth/deleteblog`, { id }, { withCredentials: true })
+      axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/deleteblog`, { id }, { withCredentials: true })
         .then(response => {
           if (response.data.status) {
             setblogs(prev => prev.filter(blog => blog._id !== id))

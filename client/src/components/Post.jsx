@@ -11,7 +11,7 @@ function Post() {
   const [Username, setUsername] = useState()
   useEffect(() => {
     const authcheck = async () => {
-      await axios.get(`${import.meta.env.VITE_BACKEND_URL}auth/me`, { withCredentials: true })
+      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/me`, { withCredentials: true })
         .then(async (response) => {
           if (response.data.status) {
             console.log(response.data);
@@ -54,7 +54,7 @@ function Post() {
       content: data.content,
       image:data.image
     };
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}post/createblog`, { payload }, { withCredentials: true })
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/post/createblog`, { payload }, { withCredentials: true })
       .then(response => {
         console.log(response);
 

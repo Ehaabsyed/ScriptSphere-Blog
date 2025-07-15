@@ -74,7 +74,7 @@ function Blogs() {
     const username = User.Username;
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}auth/bloglike`, { username, id }, { withCredentials: true });
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/bloglike`, { username, id }, { withCredentials: true });
       console.log(response.data.message);
 
       // Update blog likes locally
@@ -100,7 +100,7 @@ function Blogs() {
   const navigate = useNavigate()
   useEffect(() => {
     const authcheck = async () => {
-      await axios.get(`${import.meta.env.VITE_BACKEND_URL}auth/me`, { withCredentials: true })
+      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/me`, { withCredentials: true })
         .then(async (response) => {
 
           if (response.data.status) {
@@ -121,7 +121,7 @@ function Blogs() {
   //get all blogs from DB
   const [allBlogs, setallBlogs] = useState([])
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}auth/getblogs`)
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/getblogs`)
       .then(response => {
 
 
@@ -133,7 +133,7 @@ function Blogs() {
       })
 
 
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}auth/top-liked`)
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/top-liked`)
       .then(response => {
         settrendingblogs(response.data.blogs);
 
