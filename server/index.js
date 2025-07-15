@@ -1,56 +1,52 @@
-import express from 'express';
-import cors from 'cors';
-import { configDotenv } from 'dotenv';
-import { userRouter } from './routes/user.js';
-import ConnectDB from './db/database.js';
-import cookieParser from 'cookie-parser';
-import { blogRouter } from './routes/blog.js';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import express from 'express'
+import cors from 'cors'
+import cookieParser from 'cookie-parser'
+import dotenv from 'dotenv'
+import { userRouter } from './routes/user.js'
+import { blogRouter } from './routes/blog.js'
+import ConnectDB from './db/database.js'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-// Load environment variables
-configDotenv();
-
-// Setup __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Connect to MongoDB
-ConnectDB();
+dotenv.config()
+const app = express()
+ConnectDB()
 
-const app = express();
-
+// ✅ Must come BEFORE routes and static middleware
 app.use(cors({
   origin: [
-    'http://localhost:5173',
-    'https://script-sphere-swart.vercel.app',
-    'https://script-sphere-bice.vercel.app',
+    "http://localhost:5173",
+    "https://script-sphere-swart.vercel.app",
+    "https://script-sphere-bice.vercel.app"
   ],
   credentials: true,
 }));
 
-// handle preflight
-app.options('*', cors());
+// ✅ Handle preflight requests
+app.options("*", cors({
+  origin: [
+    "http://localhost:5173",
+    "https://script-sphere-swart.vercel.app",
+    "https://script-sphere-bice.vercel.app"
+  ],
+  credentials: true
+}));
 
-
-// ✅ Middleware to parse cookies and JSON
-app.use(cookieParser());
+// ✅ Middleware setup
 app.use(express.json());
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
 
-// ✅ Serve static files like images from /public
-app.use(express.static(path.join(__dirname, 'public')));
-
-// ✅ Routes
 app.use("/auth", userRouter);
 app.use("/post", blogRouter);
 
-// ✅ Basic test route
 app.get('/', (req, res) => {
-  res.send('ScriptSphere Backend is Live again!');
+  res.send("Hello from backend");
 });
 
-// ✅ Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
 });
