@@ -21,7 +21,10 @@ app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(cors({
-  origin:["http://localhost:5173"],
+  origin:[
+  "http://localhost:5173",
+  "https://script-sphere-bice.vercel.app"
+],
   credentials:true
 }))
 app.use(cookieParser())
