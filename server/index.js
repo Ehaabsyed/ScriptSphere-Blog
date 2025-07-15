@@ -54,7 +54,7 @@ app.use("/post", blogRouter);
 
 // ✅ Basic test route
 app.get('/', (req, res) => {
-  res.send('ScriptSphere Backend is Live!');
+  res.send('ScriptSphere Backend is Live again!');
 });
 
 // ✅ Start server
