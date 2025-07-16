@@ -128,13 +128,13 @@ function Profile() {
     <div className='min-h-[89.2vh] w-full blogsbg flex gap-5 flex-col justify-center items-center overflow-hidden'>
       <div ref={profile} className="profile box-shadow-profile mt-8 border w-3/4 md:w-1/4  h-100  rounded-4xl p-8 overflow-hidden">
         <div className="dp w-full flex flex-col justify-center items-center h-60">
-          <img src={`http://localhost:5000${User.image}`} alt="Profile" className=' wh rounded-full' />
+          <img src={`${import.meta.env.VITE_BACKEND_URL}${User.image}`} alt="Profile" className=' wh rounded-full' />
           <Link to={"/upload/" + User.email} className='text-xs mainclr'>Upload your profile picture</Link>
         </div>
         <div className="info flex flex-col justify-center items-center w-full">
-          <h1 className='text-4xl font-bold'>{User.Name}</h1>
-          <h2 className='text-xl font-normal text-[#3f2988]'>{User.Username}</h2>
-          <h3 className='font-medium'>{blogs.length} posts</h3>
+          <h1 className='text-[20px] font-bold'>{User.Name}</h1>
+          <h2 className='text-[15px] font-normal text-[#3f2988]'>{User.Username}</h2>
+          <h3 className='font-medium text-[12px]'>{blogs.length} posts</h3>
         </div>
       </div>
 

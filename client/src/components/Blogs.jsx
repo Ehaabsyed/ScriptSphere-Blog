@@ -201,14 +201,14 @@ useEffect(() => {
           {filterblogs.reverse().map((blog, index) => {
             return (
               <div onClick={(e) => handleView(e, blog._id)} key={blog._id} >
-                <div className="blog animate-card ml-8 md:ml-0 w-[320px] h-[370px] blog-shadow flex flex-col justify-between rounded-3xl">
+                <div className="blog animate-card ml-6 md:ml-0 w-[320px] h-[370px] blog-shadow flex flex-col justify-between rounded-3xl">
                   <img src={blog.image} alt="No Image found" className='blogimageheight w-full rounded-3xl' />
                   <p className='text-gray-600 text-[15px] line-clamp-2'>{blog.category}</p>
                   <h2 className='text-xl font-medium'>{blog.title}</h2>
                   <p className='text-[14px] overflow-hidden tracking-tight leading-5 line-clamp-2'>{blog.content}</p>
                   <div className="userinfo w-[300px] flex h-16 mt-1 gap justify-start items-center">
                     <Link to={"/profile/" + blog.username} onClick={(e) => e.stopPropagation()} className="w-1/6">
-                      <img src={`http://localhost:5000/${blog.authorImage}`} className='h-10 bg-black w-10 rounded-full img' alt="not found" /></Link>
+                      <img src={`${import.meta.env.VITE_BACKEND_URL}${blog.authorImage}`} className='h-10 bg-black w-10 rounded-full img' alt="not found" /></Link>
                     <div className="info">
                       <Link to="/profile/id" onClick={(e) => { e.stopPropagation() }}>
                         <h5 className='text-[18px]'>{blog.username}</h5></Link>
