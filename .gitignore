@@ -1,6 +1,8 @@
 plan.md
 node_modules
-server/.env
-client/.env
+.env
+server/.env/
+client/.env/
 client/node_modules/
+server/node_modules/
 client/build/
