@@ -19,8 +19,7 @@ ConnectDB()
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://script-sphere-swart.vercel.app",
-    "https://script-sphere-bice.vercel.app"
+    "https://script-sphere-blog.vercel.app"
   ],
   credentials: true,
 }));
