@@ -36,7 +36,7 @@ app.use("/auth", userRouter);
 app.use("/post", blogRouter);
 
 app.get('/', (req, res) => {
-  res.send("Hello from backend");
+  res.send("Hello from backend again");
 });
 
 app.listen(process.env.PORT || 5000, () => {
