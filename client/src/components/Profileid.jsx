@@ -25,7 +25,13 @@ function profileid() {
       duration: 1,
       opacity: 0
     })
-
+     
+    gsap.from(".posts", {
+          x: -1200,
+          duration: 0.9,
+          delay: 0.2,
+          opacity: 0,
+        })
   })
   const username = useParams().id
   // console.log(username);
@@ -53,40 +59,41 @@ function profileid() {
       .then(response => {
         setuser(response.data.user)
         setblogs(response.data.userBlogs);
+        console.log(response.data.userBlogs);
       })
       .catch(err => {
         console.log(err);
       })
   }, [])
 
-useEffect(() => {
-  const cards = gsap.utils.toArray(".animate-card");
+// useEffect(() => {
+//   const cards = gsap.utils.toArray(".animate-card");
 
-  cards.forEach((card) => {
-    gsap.from(card, {
-      scrollTrigger: {
-        trigger: card,
-        start: "top 100%",
-        toggleActions: "play none none none",
-        // markers: true, // optional: show for debug
-      },
-      opacity: 0,
-      y: 50,
-      duration: 0.6,
-      ease: "power3.out",
-    });
-  });
+//   cards.forEach((card) => {
+//     gsap.from(card, {
+//       scrollTrigger: {
+//         trigger: card,
+//         start: "top 100%",
+//         toggleActions: "play none none none",
+//         // markers: true, // optional: show for debug
+//       },
+//       opacity: 0,
+//       y: 50,
+//       duration: 0.6,
+//       ease: "power3.out",
+//     });
+//   });
 
-  return () => {
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-  };
-}, [blogs]);
+//   return () => {
+//     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+//   };
+// }, [blogs]);
 
   return (
     <div className='min-h-[90.3vh] w-full blogsbg flex gap-5 flex-col justify-center items-center'>
       <div ref={profile} className="profile border w-3/4 md:w-1/4 mt-8 h-90 border-black rounded-4xl p-8 overflow-hidden">
         <div className="dp w-full flex flex-col justify-center items-center h-60">
-          <img src={`http://localhost:5000${user.image}`} className='w-50 rounded-full ' alt="" />
+          <img src={`${import.meta.env.VITE_BACKEND_URL}${user.image}`} className='w-50 rounded-full ' alt="" />
         </div>
         <div className="info flex flex-col justify-center items-center w-full">
           <h1 className='text-2xl font-bold'>{user.Name}</h1>
@@ -98,11 +105,12 @@ useEffect(() => {
         <h1 className='text-2xl font-medium underline mb-10'>{blogs.length} Posts</h1>
 
 
-        {blogs.reverse().map(blog => {
+        {blogs.map(blog => {
           return (
+            
             <div onClick={() => { navigate("/view/" + blog._id) }} key={blog._id}>
               <div className="blog animate-card w-[70vw] ml-20 md:ml-0 mr-20 h-[330px] md:h-[220px] overflow-hidden blog-shadow flex-col md:flex-row flex justify-center items-start md:justify-start md:items-start gap-5 rounded-3xl">
-                <img src={blog.image} alt="" className='md:w-1/3 w-full h-2/3 md:h-full rounded-3xl' />
+                <img src={`${import.meta.env.VITE_BACKEND_URL}${blog.image}`} alt="" className='md:w-1/3 wh md:h-full rounded-full' />
                 <div className="flex flex-col md:gap-1 h-full md:mt-0 -mt-4">
                   <p className='text-gray-800 md:text-[12px] md:mt-3'>{blog.category}</p>
                   <h2 className='md:text-[18px] font-bold'>{blog.title}</h2>

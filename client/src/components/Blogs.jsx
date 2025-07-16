@@ -50,6 +50,12 @@ function Blogs() {
       delay: 0.5,
       opacity: 0,
     })
+    gsap.from(".blogs", {
+      x: -1200,
+      duration: 0.9,
+      delay: 0.2,
+      opacity: 0,
+    })
     
 
 
@@ -161,27 +167,27 @@ function Blogs() {
 
 
   const reversedBlogs = [...filterblogs].reverse();
-useEffect(() => {
-  const cards = gsap.utils.toArray(".animate-card");
+//   useEffect(() => {
+//   const cards = gsap.utils.toArray(".animate-card");
 
-  cards.forEach((card) => {
-    gsap.from(card, {
-      scrollTrigger: {
-        trigger: card,
-        start: "top 85%",
-        // markers: true, // optional: show for debug
-      },
-      opacity: 0,
-      y: 50,
-      duration: 0.6,
-      ease: "power3.out",
-    });
-  });
+//   cards.forEach((card) => {
+//     gsap.from(card, {
+//       scrollTrigger: {
+//         trigger: card,
+//         start: "top 85%",
+//         // markers: true, // optional: show for debug
+//       },
+//       opacity: 0,
+//       y: 50,
+//       duration: 0.6,
+//       ease: "power3.out",
+//     });
+//   });
 
-  return () => {
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-  };
-}, [filterblogs]);
+//   return () => {
+//     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+//   };
+// }, [filterblogs]);
 
   return (
     <div className='min-h-[calc(100vh-70px)] blogsbg overflow-hidden'>
@@ -197,7 +203,7 @@ useEffect(() => {
       <div className="screen flex ">
         <div ref={blogs} className="blogs  w-full h-full flex flex-wrap gap-5 justify-start items-center ">
           <p className="absolute left-[50%] -translate-x-[50%] text-gray-700">{allBlogs.length < 1 && "No Blogs yet!"}</p>
-          <p className="absolute left-[50%] -translate-x-[50%] text-gray-700">{filterblogs.length < 1 && "No Blogs found"}</p>
+          {/* <p className="absolute left-[50%] -translate-x-[50%] text-gray-700">{filterblogs.length < 1 && "No Blogs found"}</p> */}
           {filterblogs.reverse().map((blog, index) => {
             return (
               <div onClick={(e) => handleView(e, blog._id)} key={blog._id} >

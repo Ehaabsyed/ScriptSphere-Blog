@@ -22,11 +22,12 @@ function Profile() {
       duration:1,
       opacity:0
     })
-    // gsap.from(gsapblogs.current,{
-    //   x:900,
-    //   duration:1,
-    //   opacity:0
-    // })
+    gsap.from(".posts", {
+      x: -1200,
+      duration: 0.9,
+      delay: 0.2,
+      opacity: 0,
+    })
     
   })
   // Initialize Lenis
@@ -101,28 +102,28 @@ function Profile() {
   //server/public/profile-Images/profile-image-1752430569283-459761045.JPG
 
 
-  useEffect(() => {
-  const cards = gsap.utils.toArray(".animate-card");
+//   useEffect(() => {
+//   const cards = gsap.utils.toArray(".animate-card");
 
-  cards.forEach((card) => {
-    gsap.from(card, {
-      scrollTrigger: {
-        trigger: card,
-        start: "top 100%",
-        toggleActions: "play none none none",
-        // markers: true, // optional: show for debug
-      },
-      opacity: 0,
-      y: 50,
-      duration: 0.6,
-      ease: "power3.out",
-    });
-  });
+//   cards.forEach((card) => {
+//     gsap.from(card, {
+//       scrollTrigger: {
+//         trigger: card,
+//         start: "top 100%",
+//         toggleActions: "play none none none",
+//         // markers: true, // optional: show for debug
+//       },
+//       opacity: 0,
+//       y: 50,
+//       duration: 0.6,
+//       ease: "power3.out",
+//     });
+//   });
 
-  return () => {
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-  };
-}, [blogs]);
+//   return () => {
+//     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+//   };
+// }, [blogs]);
 
   return (
     <div className='min-h-[89.2vh] w-full blogsbg flex gap-5 flex-col justify-center items-center overflow-hidden'>
@@ -145,7 +146,7 @@ function Profile() {
           return (
 
             <div onClick={() => { navigate("/view/" + blog._id) }} key={blog._id} className="blog animate-card w-[70vw] ml-5 md:ml-0 mr-20 h-[330px] md:h-[220px] overflow-hidden blog-shadow flex-col md:flex-row flex justify-center items-start md:justify-start md:items-start gap-5 rounded-3xl">
-              <img src={blog.image} alt="No Image found" className='md:w-1/3 w-full h-2/3 md:h-full rounded-3xl' />
+              <img src={blog.image} alt="No Image found" className='md:w-1/3 img  h-2/3 md:h-full rounded-3xl' />
               <div className="flex flex-col md:gap-1 h-full md:mt-0 -mt-4">
                 <p className='text-gray-800 md:text-[12px] md:mt-3'>{blog.category}</p>
                 <h2 className='md:text-[18px] font-bold'>{blog.title}</h2>
