@@ -1,5 +1,2 @@
-plan.md
-node_modules
+node_modules/
 .env
-client/node_modules/
-client/build/
