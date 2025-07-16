@@ -61,7 +61,7 @@ router.post("/login", async (req, res) => {
         return res.json({ status: false, message: "password incorrect" })
     }
     const token = jwt.sign({ username: existingUser.Username, name: existingUser.Name, email: existingUser.Email }, process.env.JWT_KEY, { expiresIn: "24h" })
-    res.cookie("token", token, { httpOnly: true, maxAge: 3600000 })
+    res.cookie("token", token, { httpOnly: true, maxAge: 3600000,secure:true,sameSite:'None' })
     return res.json({ status: true, message: "logged In", existingUser })
 })
 router.get("/logout", (req, res) => {
