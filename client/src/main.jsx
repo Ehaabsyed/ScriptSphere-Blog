@@ -58,7 +58,7 @@ const router=createBrowserRouter([
   },
   //edit blog
   {
-    path:"/edit/id",
+    path:"/edit/:id",
     element:<Editblog/>
   },
   //diff routes

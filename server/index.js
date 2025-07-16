@@ -25,15 +25,7 @@ app.use(cors({
   credentials: true,
 }));
 
-// ✅ Handle preflight requests
-app.options("*", cors({
-  origin: [
-    "http://localhost:5173",
-    "https://script-sphere-swart.vercel.app",
-    "https://script-sphere-bice.vercel.app"
-  ],
-  credentials: true
-}));
+
 
 // ✅ Middleware setup
 app.use(express.json());
